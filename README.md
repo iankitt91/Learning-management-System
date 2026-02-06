@@ -1,0 +1,3 @@
+A full-stack Learning Management System built using the MERN stack that enables secure user authentication, course management, and real-time student progress tracking. The platform supports role-based access for admins, instructors, and learners, allowing efficient content delivery and user management in a scalable environment.
+
+The application uses React for a responsive frontend interface, Redux for global state management, and a custom RESTful API built with Node.js and Express.js. MongoDB is used for persistent data storage with Mongoose handling schema validation and relationships. Redis caching is integrated to optimize frequently accessed data and improve performance by reducing database load.
