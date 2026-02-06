@@ -1,11 +1,11 @@
 import ErrorHandler from "../utils/errorHandler.js";
 
 export const errorMiddleware = (err,req,res,next) =>{
-    err.statsCode = err.statusCode || 500;
+    err.statusCode = err.statusCode || 500;
     err.message = err.message || 'Internal server error';
 
     //wrong mongodb_id (castError)
-    if(err.name === 'castError'){
+    if(err.name === 'CastError'){
         const message = `Resources not found. Invalid ${err.path}`;
         err = new ErrorHandler(400,message);
     }
@@ -23,12 +23,12 @@ export const errorMiddleware = (err,req,res,next) =>{
     }
 
     //jwt expired token
-    if(err.name === 'TokenExpiredErrorn'){
+    if(err.name === 'TokenExpiredError'){
         const message = `Token is expired, try again`;
         err = new ErrorHandler(400,message);
     }
 
-    res.status(err.statsCode).json({
+    res.status(err.statusCode).json({
         success:false,
         message:err.message
     });

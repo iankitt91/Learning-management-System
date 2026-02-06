@@ -4,6 +4,8 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import { errorMiddleware } from './middleware/commonError.js';
 import userRouter from './routes/userRouter.js';
+import courseRouter from './routes/courseRouter.js';
+import orderRouter from './routes/orderRouter.js';
 
 
 
@@ -21,6 +23,8 @@ app.use(cors({
 
 //routes
 app.use('/api/v1',userRouter);
+app.use('/api/v1/',courseRouter);
+
 
 
 //tesing api
