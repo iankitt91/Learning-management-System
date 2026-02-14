@@ -175,6 +175,12 @@ export const addQuestion = apiErrorHandler( async (req,res,next) =>{
         courseContent.questions.push(newQuestion);
         await course.save();
 
+        await NotificationModel.create({
+                userId:req?.user?._id,
+                title:'New question received',
+                message:`You have a new question in ${courseContent.title}`,
+        });
+
         res.status(201).json({
             success:true,
             course,
@@ -215,6 +221,11 @@ export const addAnswer = apiErrorHandler( async (req,res,next) =>{
         await course.save();
         if(req.user._id === question.user._id){
             //create notification
+            await NotificationModel.create({
+                userId:req?.user?._id,
+                title:'New question reply received',
+                message:`You have a new question reply in ${course?.name}`,
+            });
         }else{
             const data = {
                 name:question.user.name,

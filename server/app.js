@@ -6,6 +6,7 @@ import { errorMiddleware } from './middleware/commonError.js';
 import userRouter from './routes/userRouter.js';
 import courseRouter from './routes/courseRouter.js';
 import orderRouter from './routes/orderRouter.js';
+import notificationRouter from './routes/notificationRouter.js';
 
 
 
@@ -23,7 +24,9 @@ app.use(cors({
 
 //routes
 app.use('/api/v1',userRouter);
-app.use('/api/v1/',courseRouter);
+app.use('/api/v1',courseRouter);
+app.use('/api/v1',orderRouter);
+app.use('/api/v1/',notificationRouter);
 
 
 
