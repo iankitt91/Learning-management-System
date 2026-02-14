@@ -326,3 +326,42 @@ export const reviewReply = apiErrorHandler( async (req,res,next) =>{
         return next( new ErrorHandler(500,error.message));
     }
 });
+
+
+//get all courses (admin only)
+export const getAllCoursesAdmin = apiErrorHandler( async (req,res,next) =>{
+    try{
+        const courses = await CourseModel.find().sort({createdAt:-1});
+
+        res.status(200).json({
+            success:true,
+            courses,
+        });
+    }catch(error){
+        return next(new ErrorHandler(500,error.message));
+    }
+});
+
+//delete course (admin only)
+export const deleteCourse = apiErrorHandler( async (req,res,next) =>{
+    try{
+        const {id} = req.params;
+        const course = await CourseModel.findByIdAndDelete(id);
+        if (!course) {
+            return next(new ErrorHandler(404, "Course not found"));
+        }
+        
+        try{
+            await redis.del(id);
+        }catch(error){
+            console.error("Redis delete failed:",error.message);
+        }
+
+        res.status(200).json({
+            success:true,
+            message:'Course deleted successfully',
+        });
+    }catch(error){
+        return next(new ErrorHandler(400,error.message));
+    }
+});

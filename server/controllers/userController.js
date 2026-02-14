@@ -294,3 +294,59 @@ export const updateAvtar = apiErrorHandler( async (req,res,next)=>{
         return next(new ErrorHandler(400,error.message));
     }
 });
+
+
+//get all users (admin only)
+export const getAllUsersAdmin = apiErrorHandler( async (req,res,next) =>{
+    try{
+        const users = await UserModel.find().sort({createdAt:-1});
+
+        res.status(200).json({
+            success:true,
+            users,
+        });
+    }catch(error){
+        return next(new ErrorHandler(400,error.message));
+    }
+});
+
+
+//update user role
+export const updateUserRole = apiErrorHandler( async (req,res,next) =>{
+    try{
+        const {id,role} = req.body;
+        const user = await UserModel.findByIdAndUpdate(id,{role:role},{new:true});
+
+        res.status(200).json({
+            success:true,
+            user,
+        })
+    }catch(error){
+        return next(new ErrorHandler(400,error.message));
+    }
+});
+
+
+//delete user (admin only)
+export const deleteUser = apiErrorHandler( async (req,res,next) =>{
+    try{
+        const {id} = req.params;
+        const user = await UserModel.findByIdAndDelete(id);
+        if (!user) {
+            return next(new ErrorHandler(404, "User not found"));
+        }
+        
+        try{
+            await redis.del(id);
+        }catch(error){
+            console.error("Redis delete failed:",error.message);
+        }
+
+        res.status(200).json({
+            success:true,
+            message:'User deleted successfully',
+        });
+    }catch(error){
+        return next(new ErrorHandler(400,error.message));
+    }
+});

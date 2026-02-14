@@ -7,6 +7,8 @@ import ErrorHandler from "../utils/errorHandler.js";
 import { sendMail } from "../utils/sendEmail.js";
 
 
+
+//create order
 export const createOrder = apiErrorHandler( async (req,res,next) =>{
     try{
         const {courseId,payment_info} = req.body;
@@ -64,6 +66,21 @@ export const createOrder = apiErrorHandler( async (req,res,next) =>{
             order,
         });
     }catch(error){
-        return next(new ErrorHandler(500,error.message));
+        return next(new ErrorHandler(400,error.message));
+    }
+});
+
+
+//get all orders (admin only)
+export const getAllOrdersAdmin = apiErrorHandler( async (req,res,next) =>{
+    try{
+        const orders = await OrderModel.find().sort({createdAt:-1});
+
+        res.status(200).json({
+            success:true,
+            orders,
+        });
+    }catch(error){
+        return next(new ErrorHandler(400,error.message));
     }
 });

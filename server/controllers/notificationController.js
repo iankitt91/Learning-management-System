@@ -10,12 +10,12 @@ export const getNotifications = apiErrorHandler( async (req,res,next) =>{
     try{
         const notifiactions = await NotificationModel.find().sort({createdAt:-1});
 
-        res.status(201).json({
+        res.status(200).json({
             success:true,
             notifiactions,
         });
     }catch(error){
-        return next(new ErrorHandler(500,error.message));
+        return next(new ErrorHandler(400,error.message));
     }
 });
 
@@ -37,7 +37,7 @@ export const updateNotification = apiErrorHandler( async (req, res, next) =>{
             notifications,
         });
     }catch(error){
-        return next(new ErrorHandler(500, error.message));
+        return next(new ErrorHandler(400, error.message));
     }
 });
 
