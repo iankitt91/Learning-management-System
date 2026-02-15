@@ -20,7 +20,7 @@ export const isAuthenticated = apiErrorHandler( async (req,res,next) =>{
 
     const user = await redis.get(decode.id);
     if(!user){
-        return next(new ErrorHandler(400,'User does not exist'));
+        return next(new ErrorHandler(400,'Login to access resourses'));
     }
 
     req.user = JSON.parse(user); 

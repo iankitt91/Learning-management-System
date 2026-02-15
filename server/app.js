@@ -8,6 +8,7 @@ import courseRouter from './routes/courseRouter.js';
 import orderRouter from './routes/orderRouter.js';
 import notificationRouter from './routes/notificationRouter.js';
 import analyticsRouter from './routes/analyticsRouter.js';
+import layoutRouter from './routes/layoutRouter.js';
 
 
 
@@ -29,6 +30,7 @@ app.use('/api/v1',courseRouter);
 app.use('/api/v1',orderRouter);
 app.use('/api/v1',notificationRouter);
 app.use('/api/v1',analyticsRouter);
+app.use('/api/v1',layoutRouter);
 
 
 
